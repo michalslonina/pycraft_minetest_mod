@@ -1,11 +1,24 @@
-# raspberryjammod-minetest
-Raspberry Jam Mod for Minetest
+# Pycraft
+![alt text](https://github.com/sprintingkiwi/pycraft-minetest/blob/master/pycraft-minetest.png)
 
-Implements most of Raspberry PI Minecraft API in Minetest.
+Modified, simplified and improved libraries to code in python via Minetest
 
-If you have secure.enable_security = true in minetest.conf, then make sure you have raspberryjammod
-listed under secure.trusted_mods. Raspberry Jam Mod cannot be rewritten without needing to be trusted,
-because of the following essential features:
- - loading tcp/ip socket dynamic library
- - executing and terminating python interpreter with /py command.
- 
+Based on the terrific idea and the original code of David Whale and Martin O'Hanlon (www.stuffaboutcode.com)
+
+Alessandro Norfo, ale.norfo@gmail.com
+Giuseppe Menegoz, gmenegoz@gmail.com
+
+# Getting Started
+## Setup
+Work in progress...
+
+## RECIPES
+Now that the Pycraft environment is setted up you are ready to explore and play with Python in Minecraft. 
+
+You will find some "Pycraft Recipes" at: https://goo.gl/bn1Uz2
+
+Refer to the wiki as library documentation: https://github.com/gmenegoz/pycraft/wiki
+
+You can also read the full Pycraft "GETTING STARTED" article: 
+ITA: https://goo.gl/e1o5fD
+ENG (Work In Progress): https://goo.gl/XQ62tV
