@@ -1,5 +1,5 @@
 # Pycraft
-![alt text](https://github.com/sprintingkiwi/pycraft-minetest/blob/master/pycraft-minetest.png)
+![alt text](https://alessandronorfo.files.wordpress.com/2017/09/pycraft_minetest.png)
 
 Modified, simplified and improved libraries to code in python via Minetest
 
