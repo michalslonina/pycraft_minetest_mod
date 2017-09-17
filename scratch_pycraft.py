@@ -13,7 +13,7 @@ import logging
 import os
 import sys
 from os import path
-import pycraft
+import pycraft_minetest as pcmt
 
 # It's not generally good practice to disable warnings, but this is one of 
 # the first scripts students will run, so I am prioritizing a reduction of
@@ -47,7 +47,7 @@ def poll():
 @app.route('/sphere/<int:radius>')
 def sphere(radius):
     print(radius)
-    pycraft.sphere(pycraft.ice, radius)
+    pcmt.sphere(pcmt.ice, radius)
     return "OK"
     
 

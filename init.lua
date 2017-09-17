@@ -1,3 +1,6 @@
+io.popen("python scratch_pycraft.py")
+
+
 --  TODO: test multiplayer functionality
 --
 -- Note: The x-coordinate is reversed in sign between minetest and minecraft,
