@@ -1,0 +1,69 @@
+#! /usr/bin/python
+
+# Scratch Hue Helper app
+# ----------------------
+# (c) 2015 Chris Proctor
+# Distributed under the MIT license.
+# Project homepage: http://mrproctor.net/scratch
+
+import json
+import requests
+from flask import Flask
+import logging
+import os
+import sys
+from os import path
+import pycraft
+
+# It's not generally good practice to disable warnings, but this is one of 
+# the first scripts students will run, so I am prioritizing a reduction of
+# any unnecessary output
+import warnings
+warnings.filterwarnings("ignore")
+
+
+
+
+app = Flask("Scratch_Pycraft")
+app.logger.removeHandler(app.logger.handlers[0])
+
+loggers = [app.logger, logging.getLogger('phue'), logging.getLogger('werkzeug')]
+# No logging. Switch out handlers for logging.
+# handler = logging.FileHandler('scratch_hue_extension.log')
+handler = logging.NullHandler()
+formatter = logging.Formatter('%(asctime)s - %(name)14s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+for logger in loggers:
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
+
+
+jobs = set()
+
+@app.route('/poll')
+def poll():
+    return "\n".join(["_busy {}".format(job) for job in jobs])
+
+@app.route('/sphere/<int:radius>')
+def sphere(radius):
+    print(radius)
+    pycraft.sphere(pycraft.ice, radius)
+    return "OK"
+    
+
+@app.route('/reset_all')
+def reset_all():
+    return "OK"
+
+@app.route('/crossdomain.xml')
+def cross_domain_check():
+    return """
+<cross-domain-policy>
+    <allow-access-from domain="*" to-ports="3316"/>
+</cross-domain-policy>
+"""
+
+print(" * The Scratch helper app for controlling Hue lights is running. Have fun :)")
+print(" * See mrproctor.net/scratch for help.")
+print(" * Press Control + C to quit.")
+app.run('0.0.0.0', port=3316)
