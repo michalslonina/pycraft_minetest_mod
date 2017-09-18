@@ -85,9 +85,13 @@ print(" * The Scratch helper app for controlling Hue lights is running. Have fun
 print(" * See mrproctor.net/scratch for help.")
 print(" * Press Control + C to quit.")
 
-try:
-    app.run('0.0.0.0', port=3316)
-except:
-    app.run('0.0.0.0', port=3316)
-else:
-    print("scratch_pycraft done")
+
+done = False
+while not done:
+    try:
+        app.run('0.0.0.0', port=3316)
+    except:
+        print("trying again")
+    else:
+        print("scratch_pycraft done")
+        done = True
