@@ -1,4 +1,4 @@
-io.popen("python scratch_pycraft.py")
+
 
 
 --  TODO: test multiplayer functionality
@@ -861,3 +861,7 @@ function handle_websocket_header(source,line)
 
     return nil
 end
+
+
+
+-- io.popen("python scratch_pycraft.py")

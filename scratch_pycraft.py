@@ -44,16 +44,11 @@ jobs = set()
 def poll():
     return "\n".join(["_busy {}".format(job) for job in jobs])
 
-@app.route('/sphere/<int:radius>')
-def sphere(radius):
-    print(radius)
-    pcmt.sphere(pcmt.ice, radius)
-    return "OK"
-    
 
 @app.route('/reset_all')
 def reset_all():
     return "OK"
+
 
 @app.route('/crossdomain.xml')
 def cross_domain_check():
@@ -63,7 +58,36 @@ def cross_domain_check():
 </cross-domain-policy>
 """
 
+
+# PYCRAFT FUNCTIONS:
+@app.route('/sphere/<str:block>/<int:radius>')
+def sphere(block, radius):
+    print(radius)
+    pcmt.sphere(pcmt.getblock(block), radius)
+    return "OK"
+    
+
+@app.route('/cube/<int:radius>')
+def sphere(radius):
+    print(radius)
+    pcmt.sphere(pcmt.ice, radius)
+    return "OK"
+    
+    
+@app.route('/sphere/<int:radius>')
+def sphere(radius):
+    print(radius)
+    pcmt.sphere(pcmt.ice, radius)
+    return "OK"
+
+
 print(" * The Scratch helper app for controlling Hue lights is running. Have fun :)")
 print(" * See mrproctor.net/scratch for help.")
 print(" * Press Control + C to quit.")
-app.run('0.0.0.0', port=3316)
+
+try:
+    app.run('0.0.0.0', port=3316)
+except:
+    app.run('0.0.0.0', port=3316)
+else:
+    print("scratch_pycraft done")
