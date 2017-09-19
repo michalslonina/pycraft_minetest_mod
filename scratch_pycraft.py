@@ -1,10 +1,13 @@
 #! /usr/bin/python
 
-# Scratch Hue Helper app
-# ----------------------
-# (c) 2015 Chris Proctor
-# Distributed under the MIT license.
-# Project homepage: http://mrproctor.net/scratch
+# Scratch Helper app
+# ------------------
+# template based on work of Chris Proctor, Project homepage: http://mrproctor.net/scratch
+#
+# main document
+#   https://wiki.scratch.mit.edu/w/images/ExtensionsDoc.HTTP-9-11.pdf
+# Scratch Extension Protocol Discussion
+#   https://scratch.mit.edu/discuss/topic/18117/
 
 import json
 import requests
