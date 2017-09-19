@@ -68,18 +68,14 @@ def sphere(radius):
     return "OK"
     
 
-#@app.route('/cube/<int:radius>')
-#def sphere(radius):
-    #print(radius)
-    #pcmt.sphere(pcmt.ice, radius)
-    #return "OK"
+@app.route('/cube/str:block/<int:radius>')
+def cube(block, radius):
+    print(block, radius)
+    pcmt.sphere(pcmt.getblock(block), radius)
+    return "OK"
     
-    
-#@app.route('/sphere/<int:radius>')
-#def sphere(radius):
-    #print(radius)
-    #pcmt.sphere(pcmt.ice, radius)
-    #return "OK"
+
+
 
 
 print(" * The Scratch helper app for controlling Hue lights is running. Have fun :)")
