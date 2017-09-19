@@ -6,7 +6,18 @@ This is a fork of the https://github.com/arpruss/raspberryjammod-minetest create
 Alessandro Norfo (ale.norfo@gmail.com) & Giuseppe Menegoz (gmenegoz@gmail.com)
 
 # Getting started
-* Follow this tutorial on how to install a mod in Minetest: http://dev.minetest.net/Installing_Mods
+## WINDOWS
+Download this installer: work in progress...
+
+## LINUX
+* Install Minetest from your distribution's repository
+* Install Lua (preferably 5.1)
+* Install Luarocks for your version of Lua
+* In a terminal execute this command as superuser: luarocks install luasocket
+* Follow this tutorial on how to install a mod in Minetest: http://dev.minetest.net/Installing_Mods. We suggest to clone this repository inside the "mods" folder of Minetest.
 * Create a world (it's better to enable creative mode)
-* click on "configure" and enable "pycraft_mod"
+* Click on "configure" and enable "pycraft_mod"
 * Play the game
+
+## MAC OSX
+Work in progress...
