@@ -14,6 +14,7 @@ import os
 import sys
 from os import path
 import pycraft_minetest as pcmt
+import time
 
 # It's not generally good practice to disable warnings, but this is one of 
 # the first scripts students will run, so I am prioritizing a reduction of
@@ -92,6 +93,7 @@ while not done:
         app.run('0.0.0.0', port=3316)
     except:
         print("trying again")
+        time.sleep(1)
     else:
         print("scratch_pycraft done")
         done = True
