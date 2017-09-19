@@ -9,8 +9,12 @@ Alessandro Norfo (ale.norfo@gmail.com) & Giuseppe Menegoz (gmenegoz@gmail.com)
 Work in progress...
 
 ## Install Python
+* Go to https://www.python.org
+* Choose Python 2.7
 
 ## Install Pycraft library
+* Open a terminal
+* Run command (as superuser on LINUX or MAC, so for example preceeded by "sudo"): pip install pycraft_minetest
 
 ## Install Pycraft mod
 * Follow this tutorial on how to install a mod in Minetest: http://dev.minetest.net/Installing_Mods
@@ -18,5 +22,5 @@ Work in progress...
 * click on "configure" and enable "pycraft_mod"
 * Play the game
 
-## Create your Python script and 
+## Create your Python script and run it
 
