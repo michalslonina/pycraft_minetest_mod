@@ -61,17 +61,17 @@ def cross_domain_check():
 
 
 # PYCRAFT FUNCTIONS:
-@app.route('/sphere/<int:radius>')
-def sphere(radius):
-    print(radius)
-    pcmt.sphere(pcmt.ice, radius)
+@app.route('/sphere/<string:block>/<int:radius>')
+def sphere(block, radius):
+    print(block, radius)
+    pcmt.sphere(pcmt.getblock(block), radius)
     return "OK"
     
 
-@app.route('/cube/str:block/<int:radius>')
+@app.route('/cube/<string:block>/<int:radius>')
 def cube(block, radius):
     print(block, radius)
-    pcmt.sphere(pcmt.getblock(block), radius)
+    pcmt.cube(pcmt.getblock(block), radius)
     return "OK"
     
 
