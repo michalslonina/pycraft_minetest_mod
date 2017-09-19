@@ -27,8 +27,6 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-
-
 app = Flask("Scratch_Pycraft")
 app.logger.removeHandler(app.logger.handlers[0])
 
@@ -79,9 +77,6 @@ def cube(block, side, x, y, z):
     pcmt.cube(pcmt.getblock(block), side, x, y, z)
     return "OK"
     
-
-
-
 
 print(" * The Scratch helper app is running. Have fun :)")
 print(" * See mrproctor.net/scratch for help.")
