@@ -1,3 +1,6 @@
+
+
+
 --  TODO: test multiplayer functionality
 --
 -- Note: The x-coordinate is reversed in sign between minetest and minecraft,
@@ -858,3 +861,7 @@ function handle_websocket_header(source,line)
 
     return nil
 end
+
+
+
+-- io.popen("python scratch_pycraft.py")
