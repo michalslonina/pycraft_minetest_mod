@@ -13,8 +13,10 @@ Work in progress...
 ## Install Pycraft library
 
 ## Install Pycraft mod
-http://dev.minetest.net/Installing_Mods
-Then create a world (better in creative mode), click on "configure" and enable Pycraft Mod, play the game.
+* Follow this tutorial on how to install a mod in Minetest: http://dev.minetest.net/Installing_Mods
+* Create a world (it's better to enable creative mode)
+* click on "configure" and enable "pycraft_mod"
+* Play the game
 
 ## Create your Python script and 
 
