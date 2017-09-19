@@ -42,7 +42,8 @@ for logger in loggers:
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)
 
-
+# jobs keeps the waiting jobs id. blocks type:'w'
+# TODO implement a system to return value to scratch (blocks type: 'r')
 jobs = set()
 
 @app.route('/poll')
@@ -82,7 +83,7 @@ def cube(block, side, x, y, z):
 
 
 
-print(" * The Scratch helper app for controlling Hue lights is running. Have fun :)")
+print(" * The Scratch helper app is running. Have fun :)")
 print(" * See mrproctor.net/scratch for help.")
 print(" * Press Control + C to quit.")
 
