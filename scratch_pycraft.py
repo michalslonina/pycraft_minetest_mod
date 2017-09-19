@@ -17,6 +17,7 @@ import os
 import sys
 from os import path
 import pycraft_minetest as pcmt
+import time
 
 # It's not generally good practice to disable warnings, but this is one of 
 # the first scripts students will run, so I am prioritizing a reduction of
@@ -63,25 +64,21 @@ def cross_domain_check():
 
 
 # PYCRAFT FUNCTIONS:
-@app.route('/sphere/<str:block>/<int:radius>')
-def sphere(block, radius):
-    print(radius)
-    pcmt.sphere(pcmt.getblock(block), radius)
+@app.route('/sphere/<string:block>/<int:radius>/<int:x>/<int:y>/<int:z>')
+def sphere(block, radius, x, y, z):
+    print(block, radius, x, y, z)
+    pcmt.sphere(pcmt.getblock(block), radius, x, y, z)
     return "OK"
     
 
-@app.route('/cube/<int:radius>')
-def sphere(radius):
-    print(radius)
-    pcmt.sphere(pcmt.ice, radius)
+@app.route('/cube/<string:block>/<int:side>/<int:x>/<int:y>/<int:z>')
+def cube(block, side, x, y, z):
+    print(block, side, x, y, z)
+    pcmt.cube(pcmt.getblock(block), side, x, y, z)
     return "OK"
     
-    
-@app.route('/sphere/<int:radius>')
-def sphere(radius):
-    print(radius)
-    pcmt.sphere(pcmt.ice, radius)
-    return "OK"
+
+
 
 
 print(" * The Scratch helper app for controlling Hue lights is running. Have fun :)")
@@ -95,6 +92,7 @@ while not done:
         app.run('0.0.0.0', port=3316)
     except:
         print("trying again")
+        time.sleep(1)
     else:
         print("scratch_pycraft done")
         done = True
