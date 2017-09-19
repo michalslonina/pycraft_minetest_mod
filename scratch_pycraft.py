@@ -61,25 +61,25 @@ def cross_domain_check():
 
 
 # PYCRAFT FUNCTIONS:
-@app.route('/sphere/<str:block>/<int:radius>')
-def sphere(block, radius):
-    print(radius)
-    pcmt.sphere(pcmt.getblock(block), radius)
-    return "OK"
-    
-
-@app.route('/cube/<int:radius>')
-def sphere(radius):
-    print(radius)
-    pcmt.sphere(pcmt.ice, radius)
-    return "OK"
-    
-    
 @app.route('/sphere/<int:radius>')
 def sphere(radius):
     print(radius)
     pcmt.sphere(pcmt.ice, radius)
     return "OK"
+    
+
+#@app.route('/cube/<int:radius>')
+#def sphere(radius):
+    #print(radius)
+    #pcmt.sphere(pcmt.ice, radius)
+    #return "OK"
+    
+    
+#@app.route('/sphere/<int:radius>')
+#def sphere(radius):
+    #print(radius)
+    #pcmt.sphere(pcmt.ice, radius)
+    #return "OK"
 
 
 print(" * The Scratch helper app for controlling Hue lights is running. Have fun :)")
