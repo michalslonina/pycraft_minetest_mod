@@ -7,7 +7,7 @@ Alessandro Norfo (ale.norfo@gmail.com) & Giuseppe Menegoz (gmenegoz@gmail.com)
 
 # Getting started
 ## WINDOWS
-Download this installer: work in progress...
+Download this installer: [pycraft_minetest.exe](https://drive.google.com/open?id=0B9leATA2g5JjVWZuZFkyY0lHQUU)
 
 ## LINUX
 * Install Minetest from your distribution's repository
