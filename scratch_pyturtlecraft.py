@@ -54,11 +54,7 @@ def reset_all():
 
 @app.route('/crossdomain.xml')
 def cross_domain_check():
-    return """
-<cross-domain-policy>
-    <allow-access-from domain="*" to-ports="3316"/>
-</cross-domain-policy>
-"""
+    return '<cross-domain-policy><allow-access-from domain="*" to-ports="'+EXTENSION_PORT+'"/></cross-domain-policy>'
 
 # PYCRAFT FUNCTIONS:
 """
@@ -189,11 +185,12 @@ print(" *** creating turtle ***")
 print(" * Press Control + C to quit.")
 
 myturtle = initTurtle()
+EXTENSION_PORT = 3320
 
 done = False
 while not done:
     try:
-        app.run('0.0.0.0', port=3320)
+        app.run('0.0.0.0', port=EXTENSION_PORT)
     except:
         print("trying again")
         time.sleep(1)
