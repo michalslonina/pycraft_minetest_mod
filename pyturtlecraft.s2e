@@ -2,16 +2,17 @@
   "extensionName": "Scratch_Turtle Pycraft",
   "extensionPort": 3320,
   "blockSpecs": [
-      [" ", "pen down", "pendown"],
-      [" ", "pen up", "penup"],
-      [" ", "goto x %n y %n z %n", "goto"],
-      [" ", "up %n degrees", "up"],
-      [" ", "down %n degrees", "down"],
-      [" ", "move %n steps", "forward", 10],
-      [" ", "turn left %n degrees", "left", 15],
-      [" ", "turn right %n degrees", "right", 15],
-      [" ", "point in direction %n", "pointto", 90],
-      [" ", "set pen to block type %m.blocktype", "penblock", "ice"]
+      ["r", "where I am", "where"],
+      ["w", "pen down", "pendown"],
+      ["w", "pen up", "penup"],
+      ["w", "goto x %n y %n z %n", "goto"],
+      ["w", "up %n degrees", "up", 90],
+      ["w", "down %n degrees", "down", 90],
+      ["w", "move %n steps", "forward", 1],
+      ["w", "turn left %n degrees", "left", 90],
+      ["w", "turn right %n degrees", "right", 90],
+      ["w", "point in direction %n", "pointto", 90],
+      ["w", "set pen to block type %m.blocktype", "penblock", "ice"]
   ],
   "menus": {
     "blocktype":["glowstone", "wool", "wood", "ice", "gold"]
