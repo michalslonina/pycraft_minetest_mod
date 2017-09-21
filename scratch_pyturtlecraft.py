@@ -3,6 +3,7 @@
 # Scratch Helper app
 # ------------------
 # template based on work of Chris Proctor, Project homepage: http://mrproctor.net/scratch
+#   https://github.com/cproctor/scratch_hue
 #
 # main document
 #   https://wiki.scratch.mit.edu/w/images/ExtensionsDoc.HTTP-9-11.pdf
@@ -31,14 +32,19 @@ for logger in loggers:
 # jobs keeps the waiting jobs id. blocks type:'w'
 # TODO implement a system to return value to scratch (blocks type: 'r')
 jobs = set()
+variables = {}
 
 @app.route('/poll')
 def poll():
-    return "\n".join(["_busy {}".format(job) for job in jobs])
+    s = "\n".join(["_busy {}".format(job) for job in jobs])
+    s = s + "\n".join(["{} {}".format(var,variables[var]) for var in variables.keys()])
+    return s
 
 @app.route('/reset_all')
 def reset_all():
     myturtle = initTurtle()
+    jobs = set()
+    variables = {}
     return "OK"
 
 @app.route('/crossdomain.xml')
@@ -55,65 +61,98 @@ def cross_domain_check():
 [" ", "set pen to block type %m.blocktype", "penblock", "ice"],
 """
 
-@app.route('/penup')
-def penup():
-    print("penup")
+def log(s):
+    print(s)
+    pcmt.chat("turtle received: {}".format(s))
+
+def addVariable(varName, varValue):
+    variables[varName] = str(varValue)
+
+@app.route('/where')
+def where(position):
+    log("where")
+    pos = pcmt.where()
+    addVariable("where", pos)
+    return "OK"
+
+@app.route('/penup/<int:jobId>')
+def penup(jobId):
+    jobs.add(jobId)
+    log("penup")
     myturtle.penup()
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/pendown')
-def pendown():
-    print("pendown")
+@app.route('/pendown/<int:jobId>')
+def pendown(jobId):
+    jobs.add(jobId)
+    log("pendown")
     myturtle.pendown()
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/up/<int:angle>')
-def up(angle):
-    print("up {}".format(angle))
+@app.route('/up/<int:jobId>/<int:angle>')
+def up(jobId,angle):
+    jobs.add(jobId)
+    log("up {}".format(angle))
     myturtle.up(angle)
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/down/<int:angle>')
-def down(angle):
-    print("down {}".format(angle))
+@app.route('/down/<int:jobId>/<int:angle>')
+def down(jobId, angle):
+    jobs.add(jobId)
+    log("down {}".format(angle))
     myturtle.down(angle)
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/forward/<int:steps>')
-def forward(steps):
-    global myturtle
-    print("forward {}".format(steps))
+@app.route('/forward/<int:jobId>/<int:steps>')
+def forward(jobId, steps):
+    jobs.add(jobId)
+    log("forward {}".format(steps))
     myturtle.forward(steps)
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/left/<int:degrees>')
-def left(degrees):
-    print("left {}".format(degrees))
+@app.route('/left/<int:jobId>/<int:degrees>')
+def left(jobId, degrees):
+    jobs.add(jobId)
+    log("left {}".format(degrees))
     myturtle.left(degrees)
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/right/<int:degrees>')
-def right(degrees):
-    print("right {}".format(degrees))
+@app.route('/right/<int:jobId>/<int:degrees>')
+def right(jobId, degrees):
+    jobs.add(jobId)
+    log("right {}".format(degrees))
     myturtle.right(degrees)
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/goto/<int:x>/<int:y>/<int:z>')
-def goto(x, y, z):
-    print("goto x {} y {} z {}".format(x,y,z))
-    myturtle.goto(x,y,z)
+@app.route('/goto/<int:jobId>/<int:x>/<int:y>/<int:z>')
+def goto(jobId, x, y, z):
+    jobs.add(jobId)
+    log("goto x {} y {} z {}".format(x, y, z))
+    myturtle.goto(x, y, z)
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/penblock/<string:block>')
-def penblock(block):
-    print("penblock {}={}".format(block,pcmt.getblock(block)))
+@app.route('/penblock/<int:jobId>/<string:block>')
+def penblock(jobId,block):
+    jobs.add(jobId)
+    log("penblock {}={}".format(block,pcmt.getblock(block)))
     myturtle.penblock(pcmt.getblock(block))
+    jobs.remove(jobId)
     return "OK"
 
-@app.route('/cube/<string:block>/<int:side>/<int:x>/<int:y>/<int:z>')
-def cube(block, side, x, y, z):
+@app.route('/cube/<int:jobId>/<string:block>/<int:side>/<int:x>/<int:y>/<int:z>')
+def cube(jobId, block, side, x, y, z):
+    jobs.add(jobId)
     print(block, side, x, y, z)
     pcmt.cube(pcmt.getblock(block), side, x, y, z)
+    jobs.remove(jobId)
     return "OK"
 
 def initTurtle():
@@ -122,6 +161,7 @@ def initTurtle():
     t.setheading(0)
     t.setverticalheading(0)
     t.setposition(0, 0, 0)
+    t.speed(10)
     pcmt.chat("turtle created")
     print("turtle created ", t)
     return t
