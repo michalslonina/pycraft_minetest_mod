@@ -30,18 +30,23 @@ for logger in loggers:
     logger.setLevel(logging.INFO)
 
 # jobs keeps the waiting jobs id. blocks type:'w'
-# TODO implement a system to return value to scratch (blocks type: 'r')
+# addVariable to return values to scratch (blocks type: 'r')
 jobs = set()
 variables = {}
 
 @app.route('/poll')
 def poll():
+    global myturtle, jobs, variables
     s = "\n".join(["_busy {}".format(job) for job in jobs])
-    s = s + "\n".join(["{} {}".format(var,variables[var]) for var in variables.keys()])
+    s = s + "\n".join(["{} {}".format(var, variables[var]) for var in variables.keys()])
+    #b = s
+    #if b.strip() != "":
+    #    print(b)
     return s
 
 @app.route('/reset_all')
 def reset_all():
+    global myturtle, jobs, variables
     myturtle = initTurtle()
     jobs = set()
     variables = {}
@@ -66,17 +71,20 @@ def log(s):
     pcmt.chat("turtle received: {}".format(s))
 
 def addVariable(varName, varValue):
+    global myturtle, jobs, variables
     variables[varName] = str(varValue)
 
-@app.route('/where')
-def where(position):
-    log("where")
+@app.route('/setwhere')
+def setwhere():
+    global myturtle, jobs, variables
+    log("setwhere")
     pos = pcmt.where()
     addVariable("where", pos)
     return "OK"
 
 @app.route('/penup/<int:jobId>')
 def penup(jobId):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("penup")
     myturtle.penup()
@@ -85,6 +93,7 @@ def penup(jobId):
 
 @app.route('/pendown/<int:jobId>')
 def pendown(jobId):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("pendown")
     myturtle.pendown()
@@ -93,6 +102,7 @@ def pendown(jobId):
 
 @app.route('/up/<int:jobId>/<int:angle>')
 def up(jobId,angle):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("up {}".format(angle))
     myturtle.up(angle)
@@ -101,6 +111,7 @@ def up(jobId,angle):
 
 @app.route('/down/<int:jobId>/<int:angle>')
 def down(jobId, angle):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("down {}".format(angle))
     myturtle.down(angle)
@@ -109,6 +120,7 @@ def down(jobId, angle):
 
 @app.route('/forward/<int:jobId>/<int:steps>')
 def forward(jobId, steps):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("forward {}".format(steps))
     myturtle.forward(steps)
@@ -117,6 +129,7 @@ def forward(jobId, steps):
 
 @app.route('/left/<int:jobId>/<int:degrees>')
 def left(jobId, degrees):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("left {}".format(degrees))
     myturtle.left(degrees)
@@ -125,6 +138,7 @@ def left(jobId, degrees):
 
 @app.route('/right/<int:jobId>/<int:degrees>')
 def right(jobId, degrees):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("right {}".format(degrees))
     myturtle.right(degrees)
@@ -133,6 +147,7 @@ def right(jobId, degrees):
 
 @app.route('/goto/<int:jobId>/<int:x>/<int:y>/<int:z>')
 def goto(jobId, x, y, z):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("goto x {} y {} z {}".format(x, y, z))
     myturtle.goto(x, y, z)
@@ -141,6 +156,7 @@ def goto(jobId, x, y, z):
 
 @app.route('/penblock/<int:jobId>/<string:block>')
 def penblock(jobId,block):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     log("penblock {}={}".format(block,pcmt.getblock(block)))
     myturtle.penblock(pcmt.getblock(block))
@@ -149,6 +165,7 @@ def penblock(jobId,block):
 
 @app.route('/cube/<int:jobId>/<string:block>/<int:side>/<int:x>/<int:y>/<int:z>')
 def cube(jobId, block, side, x, y, z):
+    global myturtle, jobs, variables
     jobs.add(jobId)
     print(block, side, x, y, z)
     pcmt.cube(pcmt.getblock(block), side, x, y, z)

@@ -2,7 +2,8 @@
   "extensionName": "Scratch_Turtle Pycraft",
   "extensionPort": 3320,
   "blockSpecs": [
-      ["r", "where I am", "where"],
+      ["r", "where", "where"],
+      [" ", "read where is the player", "setwhere"],
       ["w", "pen down", "pendown"],
       ["w", "pen up", "penup"],
       ["w", "goto x %n y %n z %n", "goto"],
