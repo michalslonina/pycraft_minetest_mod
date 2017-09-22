@@ -3,8 +3,7 @@
   "extensionPort": 3320,
   "blockSpecs": [
       [" ", "reset turtle", "reset_turtle"],
-      ["r", "where", "where"],
-      [" ", "read where is the player", "setwhere"],
+      ["R", "where", "getposx"],
       ["w", "pen down", "pendown"],
       ["w", "pen up", "penup"],
       ["w", "go to x %n y %n z %n", "goto"],

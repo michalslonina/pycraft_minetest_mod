@@ -75,13 +75,13 @@ def reset_turtle():
     myturtle = initTurtle()
     return "OK"
 
-@app.route('/setwhere')
-def setwhere():
+@app.route('/getposx')
+def getposx():
     global myturtle, jobs, variables
-    log("setwhere")
+    log("getposx")
     pos = pcmt.where()
-    addVariable("where", pos)
-    return "OK"
+    # addVariable("posx", posx)
+    return int(pos.x)
 
 @app.route('/penup/<int:jobId>')
 def penup(jobId):
