@@ -47,7 +47,6 @@ def poll():
 @app.route('/reset_all')
 def reset_all():
     global myturtle, jobs, variables
-    myturtle = initTurtle()
     jobs = set()
     variables = {}
     return "OK"
