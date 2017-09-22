@@ -1,7 +1,8 @@
-{ 
+{
   "extensionName": "Scratch_Turtle Pycraft",
   "extensionPort": 3320,
   "blockSpecs": [
+      [" ", "reset turtle", "reset_turtle"],
       ["r", "where", "where"],
       [" ", "read where is the player", "setwhere"],
       ["w", "pen down", "pendown"],

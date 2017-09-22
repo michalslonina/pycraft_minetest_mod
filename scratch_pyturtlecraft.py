@@ -70,6 +70,12 @@ def addVariable(varName, varValue):
     global myturtle, jobs, variables
     variables[varName] = str(varValue)
 
+@app.route('/reset_turtle')
+def reset_turtle():
+    global myturtle, jobs, variables
+    myturtle = initTurtle()
+    return "OK"
+
 @app.route('/setwhere')
 def setwhere():
     global myturtle, jobs, variables
