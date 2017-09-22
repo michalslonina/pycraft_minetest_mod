@@ -17,7 +17,7 @@ import logging
 import os
 import sys
 from os import path
-import pycraft_minetest as pcmt
+import main as pcmt
 import time
 
 # It's not generally good practice to disable warnings, but this is one of 
@@ -77,6 +77,13 @@ def cube(block, side, x, y, z):
     pcmt.cube(pcmt.getblock(block), side, x, y, z)
     return "OK"
     
+
+@app.route('/over/<string:block>')
+def over(block):
+    #print("check if player is over " + block)
+    return pcmt.over(pcmt.getblock(block))
+
+
 
 print(" * The Scratch helper app is running. Have fun :)")
 print(" * See mrproctor.net/scratch for help.")
