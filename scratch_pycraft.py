@@ -17,7 +17,7 @@ import logging
 import os
 import sys
 from os import path
-import main as pcmt
+import pycraft_minetest as pcmt
 import time
 
 # It's not generally good practice to disable warnings, but this is one of 
