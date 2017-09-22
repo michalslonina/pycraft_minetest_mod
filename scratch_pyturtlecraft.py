@@ -8,7 +8,12 @@
 # main document
 #   https://wiki.scratch.mit.edu/w/images/ExtensionsDoc.HTTP-9-11.pdf
 # Scratch Extension Protocol Discussion
+#   https://wiki.scratch.mit.edu/wiki/Scratch_Extension
 #   https://scratch.mit.edu/discuss/topic/18117/
+# scratchx extension
+#   https://github.com/LLK/scratchx/wiki
+# hat blocks
+#   https://scratch.mit.edu/discuss/topic/49736/
 #
 
 from flask import Flask
