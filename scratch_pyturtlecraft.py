@@ -175,7 +175,7 @@ def cube(jobId, block, side, x, y, z):
     return "OK"
 
 def initTurtle():
-    t = pcmt.turtle(pcmt.glowstone)
+    t = pcmt.Turtle(pcmt.glowstone)
     t.clear_turtle(0, 0, 0)
     t.setheading(0)
     t.setverticalheading(0)

@@ -7,14 +7,14 @@
       [" ", "read where is the player", "setwhere"],
       ["w", "pen down", "pendown"],
       ["w", "pen up", "penup"],
-      ["w", "goto x %n y %n z %n", "goto"],
-      ["w", "up %n degrees", "up", 90],
-      ["w", "down %n degrees", "down", 90],
+      ["w", "go to x %n y %n z %n", "goto"],
+      ["w", "turn up %n degrees", "up", 90],
+      ["w", "turn down %n degrees", "down", 90],
       ["w", "move %n steps", "forward", 1],
       ["w", "turn left %n degrees", "left", 90],
       ["w", "turn right %n degrees", "right", 90],
       ["w", "point in direction %n", "pointto", 90],
-      ["w", "set pen to block type %m.blocktype", "penblock", "ice"]
+      ["w", "set pen block to %s", "penblock"]
   ],
   "menus": {
     "blocktype":["glowstone", "wool", "wood", "ice", "gold"]
