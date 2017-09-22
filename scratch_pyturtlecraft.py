@@ -37,6 +37,7 @@ variables = {}
 @app.route('/poll')
 def poll():
     global myturtle, jobs, variables
+    where()
     s = "\n".join(["_busy {}".format(job) for job in jobs])
     s = s + "\n".join(["{} {}".format(var, variables[var]) for var in variables.keys()])
     #b = s
@@ -75,13 +76,13 @@ def reset_turtle():
     myturtle = initTurtle()
     return "OK"
 
-@app.route('/getposx')
-def getposx():
+def where():
     global myturtle, jobs, variables
-    log("getposx")
     pos = pcmt.where()
-    # addVariable("posx", posx)
-    return int(pos.x)
+    addVariable("posx", pos.x)
+    addVariable("posy", pos.y)
+    addVariable("posz", pos.z)
+    return "OK"
 
 @app.route('/penup/<int:jobId>')
 def penup(jobId):
