@@ -864,4 +864,4 @@ end
 
 
 
--- io.popen("python scratch_pycraft.py")
+-- os.execute("python scratch_pycraft.py")
