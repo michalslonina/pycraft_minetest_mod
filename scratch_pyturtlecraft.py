@@ -14,35 +14,62 @@
 #   https://github.com/LLK/scratchx/wiki
 # hat blocks
 #   https://scratch.mit.edu/discuss/topic/49736/
+# wedo extension
+#   https://scratch.mit.edu/scratchr2/static/js/scratch_extensions/wedoExtension.js
+# framework scratch/snap
+#   https://github.com/blockext/blockext/tree/master/blockext
 #
 
-from flask import Flask
+#
+# TODO blocco over non funziona, provare con true invece di True
+# TODO blocco per leggere la chat e inserire le risposte in say
+# TODO blocco hat vedere cone funziona
+#
+
+from flask import Flask, request
 import logging
 import pycraft_minetest as pcmt
 import time
 
+""" 
+  global variables
+"""
 app = Flask("Scratch_Pycraft")
-app.logger.removeHandler(app.logger.handlers[0])
+EXTENSION_PORT = 3320
+myturtle = None
+jobs = set() # jobs keeps the waiting jobs id. blocks type:'w'
+variables = {} # addVariable to return values to scratch (blocks type: 'r')
 
-loggers = [app.logger, logging.getLogger('werkzeug')]
-# No logging. Switch out handlers for logging.
-# handler = logging.FileHandler('scratch_hue_extension.log')
-handler = logging.NullHandler()
-formatter = logging.Formatter('%(asctime)s - %(name)14s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-for logger in loggers:
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
 
-# jobs keeps the waiting jobs id. blocks type:'w'
-# addVariable to return values to scratch (blocks type: 'r')
-jobs = set()
-variables = {}
+def initLogger(app):
+    """ initialize logger, app to DEBUG and flask to ERROR """
+    from sys import stdout
+    app.logger.removeHandler(app.logger.handlers[0])
+    loggers = [[app.logger, logging.DEBUG, logging.StreamHandler(stdout)],
+               [logging.getLogger('werkzeug'), logging.ERROR, logging.NullHandler()]]
+    # handler = logging.FileHandler('"Scratch_Pycraft".log')
+    formatter = logging.Formatter('%(asctime)s - %(name)14s - %(levelname)s - %(message)s')
+    for logger in loggers:
+        handler = logger[2]
+        handler.setFormatter(formatter)
+        logger[0].addHandler(handler)
+        logger[0].setLevel(logger[1])
 
+
+@app.errorhandler(Exception)
+def exceptions(e):
+    app.logger.debug(e)
+
+@app.before_request
+def after_request():
+    if request.path != "/poll": # to avoid not necessary logs
+        app.logger.debug("received {}".format(request.full_path))
+
+# scratch protocol path
 @app.route('/poll')
 def poll():
     global myturtle, jobs, variables
-    where()
+    where() # update position
     s = "\n".join(["_busy {}".format(job) for job in jobs])
     s = s + "\n".join(["{} {}".format(var, variables[var]) for var in variables.keys()])
     #b = s
@@ -53,6 +80,7 @@ def poll():
 @app.route('/reset_all')
 def reset_all():
     global myturtle, jobs, variables
+    reset_turtle()
     jobs = set()
     variables = {}
     return "OK"
@@ -68,7 +96,7 @@ def cross_domain_check():
 """
 
 def log(s):
-    print(s)
+    app.logger.debug(s)
     pcmt.chat("turtle received: {}".format(s))
 
 def addVariable(varName, varValue):
@@ -82,6 +110,11 @@ def reset_turtle():
     return "OK"
 
 def where():
+    """
+       called from poll to update position
+       warning: poll calls it 30 times for second
+       if it slow down everithing, cache the position and update 1 or 2 times a second
+    """
     global myturtle, jobs, variables
     pos = pcmt.where()
     addVariable("posx", pos.x)
@@ -165,11 +198,23 @@ def goto(jobId, x, y, z):
 def penblock(jobId,block):
     global myturtle, jobs, variables
     jobs.add(jobId)
-    log("penblock {}={}".format(block,pcmt.getblock(block)))
+    log("penblock {}={}".format(block, pcmt.getblock(block)))
     myturtle.penblock(pcmt.getblock(block))
     jobs.remove(jobId)
     return "OK"
 
+@app.route('/over/<string:block>')
+def over(block):
+    global myturtle, jobs, variables
+    log("over {} {}".format(block,pcmt.getblock(block)))
+    res = myturtle.over(pcmt.getblock(block))
+    result = ("true" if res is True else
+              "false" if res is False else
+              "" if res == None else str(res))
+    addVariable("over", str(result))
+    return "OK"
+
+"""
 @app.route('/cube/<int:jobId>/<string:block>/<int:side>/<int:x>/<int:y>/<int:z>')
 def cube(jobId, block, side, x, y, z):
     global myturtle, jobs, variables
@@ -178,6 +223,7 @@ def cube(jobId, block, side, x, y, z):
     pcmt.cube(pcmt.getblock(block), side, x, y, z)
     jobs.remove(jobId)
     return "OK"
+"""
 
 def initTurtle():
     t = pcmt.Turtle(pcmt.glowstone)
@@ -187,24 +233,31 @@ def initTurtle():
     t.setposition(0, 0, 0)
     t.speed(10)
     pcmt.chat("turtle created")
-    print("turtle created ", t)
+    app.logger.debug("turtle created {}".format(str(t)))
     return t
 
-print(" * The Scratch helper app is running. Have fun :)")
-print(" * See mrproctor.net/scratch for help.")
-print(" *** creating turtle ***")
-print(" * Press Control + C to quit.")
+def main():
+    global app, myturtle, EXTENSION_PORT
+    initLogger(app)
+    print(" * The Scratch helper app is running. Have fun :)")
+    print(" * ")
+    print(" *** creating turtle ***")
+    print(" * Press Control + C to quit.")
+    print(" * ")
 
-myturtle = initTurtle()
-EXTENSION_PORT = 3320
+    myturtle = initTurtle()
 
-done = False
-while not done:
-    try:
-        app.run('0.0.0.0', port=EXTENSION_PORT)
-    except:
-        print("trying again")
-        time.sleep(1)
-    else:
-        print("scratch_pyturtlecraft done")
-        done = True
+    done = False
+    while not done:
+        try:
+            app.run('0.0.0.0', port=EXTENSION_PORT)
+        except:
+            print("trying again")
+            time.sleep(1)
+        else:
+            print("scratch_pyturtlecraft done")
+            done = True
+
+
+if __name__ == "__main__":
+    main()
