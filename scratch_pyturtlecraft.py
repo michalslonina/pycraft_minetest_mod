@@ -27,6 +27,9 @@
 # TODO blocco per leggere la chat e inserire le risposte in say
 # TODO blocco hat vedere cone funziona
 #
+# TODO [" ", "point in direction %n", "pointto", 90],
+# TODO [" ", "set pen to block type %m.blocktype", "penblock", "ice"],
+#
 
 from flask import Flask, request
 import logging
@@ -92,10 +95,6 @@ def cross_domain_check():
     return '<cross-domain-policy><allow-access-from domain="*" to-ports="'+EXTENSION_PORT+'"/></cross-domain-policy>'
 
 # PYCRAFT FUNCTIONS:
-"""
-[" ", "point in direction %n", "pointto", 90],
-[" ", "set pen to block type %m.blocktype", "penblock", "ice"],
-"""
 
 def log(s):
     app.logger.debug("executing {}".format(s))
@@ -111,29 +110,19 @@ def reset_turtle():
     myturtle = initTurtle()
     return "OK"
 
-
-@app.route('/over/<string:block>')
-def over(block):
-    global myturtle, jobs, variables
-    log("over {} {}".format(block, pcmt.getblock(block)))
-    res = myturtle.over(pcmt.getblock(block))
-    result = ("true" if res is True else
-              "false" if res is False else
-              "" if res == None else str(res))
-    addVariable("over", str(result))
-    return "OK"
-
 def where():
     """
        called from poll to update position
        warning: poll calls it 30 times for second
-       if it slow down everithing, cache the position and update 1 or 2 times a second
+       if it slow down everything, we should cache the position and update 1 or 2 times every second
     """
     global myturtle, jobs, variables
     pos = pcmt.where()
+    w = pcmt.what(0, -1, 0, absolute=False)
     addVariable("posx", pos.x)
     addVariable("posy", pos.y)
     addVariable("posz", pos.z)
+    addVariable("what", w)
     return "OK"
 
 @app.route('/penup/<int:jobId>')
