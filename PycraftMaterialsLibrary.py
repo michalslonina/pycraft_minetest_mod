@@ -16,6 +16,12 @@ class PycraftMaterialsLibrary():
         else:
             return "what is the name of block number {}?".format(id)
 
+    def getBlockId(self, name):
+        if name in self.matlibrary:
+            return self.matlibrary[name]
+        else:
+            return pcmt.gold # default block if name is unknown
+
     def testNameInPcmt(self, name, id):
         for r in dir(pcmt):
             try:
@@ -25,6 +31,8 @@ class PycraftMaterialsLibrary():
             except:
                 pass
         return None
+
+
 
     def buildDictWithBlockNamesValues(self):
         blockNames = dir(blocklist)  # get all variables in blocklist.py

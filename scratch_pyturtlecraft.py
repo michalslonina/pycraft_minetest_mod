@@ -35,6 +35,7 @@ from flask import Flask, request
 import logging
 import pycraft_minetest as pcmt
 import time
+from PycraftMaterialsLibrary import PycraftMaterialsLibrary
 
 """ 
   global variables
@@ -42,9 +43,9 @@ import time
 app = Flask("Scratch_Pycraft")
 EXTENSION_PORT = 3320
 myturtle = None
-jobs = set() # jobs keeps the waiting jobs id. blocks type:'w'
-variables = {} # addVariable to return values to scratch (blocks type: 'r')
-
+jobs = set()  # jobs keeps the waiting jobs id. blocks type:'w'
+variables = {}  # addVariable to return values to scratch (blocks type: 'r')
+materialLibray = PycraftMaterialsLibrary()
 
 def initLogger(app):
     """ initialize logger, app to DEBUG and flask to ERROR """
@@ -117,12 +118,12 @@ def where():
     """
     global myturtle, jobs, variables
     pos = pcmt.where()
-    pcmt.input_from_chat()
-    w = pcmt.what(0, -1, 0, absolute=False)
+    und = pcmt.under() #pcmt.what(0, -1, 0, absolute=False)
+    undName = materialLibray.getBlockName(und)
     addVariable("posx", pos.x)
     addVariable("posy", pos.y)
     addVariable("posz", pos.z)
-    addVariable("what", w)
+    addVariable("what", undName)
     return "OK"
 
 @app.route('/penup/<int:jobId>')
@@ -198,11 +199,12 @@ def goto(jobId, x, y, z):
     return "OK"
 
 @app.route('/penblock/<int:jobId>/<string:block>')
-def penblock(jobId,block):
+def penblock(jobId, block):
     global myturtle, jobs, variables
     jobs.add(jobId)
-    log("penblock {}={}".format(block, pcmt.getblock(block)))
-    myturtle.penblock(pcmt.getblock(block))
+    id = materialLibray.getBlockId(block)
+    log("penblock {}[{}]".format(block, id))
+    myturtle.penblock(id)
     jobs.remove(jobId)
     return "OK"
 
@@ -223,7 +225,7 @@ def initTurtle():
     t.setheading(0)
     t.setverticalheading(0)
     t.setposition(0, 0, 0)
-    t.speed(10)
+    t.speed(12) # create a block for speed?
     pcmt.chat("turtle created")
     app.logger.debug("turtle created {}".format(str(t)))
     return t
