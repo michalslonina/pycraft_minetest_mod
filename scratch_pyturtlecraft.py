@@ -18,6 +18,8 @@
 #   https://scratch.mit.edu/scratchr2/static/js/scratch_extensions/wedoExtension.js
 # framework scratch/snap
 #   https://github.com/blockext/blockext/tree/master/blockext
+# flask objects
+#   http://flask.pocoo.org/docs/0.12/api/
 #
 
 #
@@ -96,7 +98,7 @@ def cross_domain_check():
 """
 
 def log(s):
-    app.logger.debug(s)
+    app.logger.debug("executing {}".format(s))
     pcmt.chat("turtle received: {}".format(s))
 
 def addVariable(varName, varValue):
@@ -107,6 +109,18 @@ def addVariable(varName, varValue):
 def reset_turtle():
     global myturtle, jobs, variables
     myturtle = initTurtle()
+    return "OK"
+
+
+@app.route('/over/<string:block>')
+def over(block):
+    global myturtle, jobs, variables
+    log("over {} {}".format(block, pcmt.getblock(block)))
+    res = myturtle.over(pcmt.getblock(block))
+    result = ("true" if res is True else
+              "false" if res is False else
+              "" if res == None else str(res))
+    addVariable("over", str(result))
     return "OK"
 
 def where():
@@ -201,17 +215,6 @@ def penblock(jobId,block):
     log("penblock {}={}".format(block, pcmt.getblock(block)))
     myturtle.penblock(pcmt.getblock(block))
     jobs.remove(jobId)
-    return "OK"
-
-@app.route('/over/<string:block>')
-def over(block):
-    global myturtle, jobs, variables
-    log("over {} {}".format(block,pcmt.getblock(block)))
-    res = myturtle.over(pcmt.getblock(block))
-    result = ("true" if res is True else
-              "false" if res is False else
-              "" if res == None else str(res))
-    addVariable("over", str(result))
     return "OK"
 
 """
