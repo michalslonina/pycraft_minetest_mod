@@ -85,7 +85,6 @@ def poll():
 @app.route('/reset_all')
 def reset_all():
     global myturtle, jobs, variables
-    reset_turtle()
     jobs = set()
     variables = {}
     return "OK"
@@ -112,12 +111,13 @@ def reset_turtle():
 
 def where():
     """
-       called from poll to update position
-       warning: poll calls it 30 times for second
+       called from poll to update position and block under feet
+       warning: poll calls us 30 times for second
        if it slow down everything, we should cache the position and update 1 or 2 times every second
     """
     global myturtle, jobs, variables
     pos = pcmt.where()
+    pcmt.input_from_chat()
     w = pcmt.what(0, -1, 0, absolute=False)
     addVariable("posx", pos.x)
     addVariable("posy", pos.y)
