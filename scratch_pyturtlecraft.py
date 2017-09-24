@@ -22,6 +22,9 @@
 #   http://flask.pocoo.org/docs/0.12/api/
 #
 
+# install Flask (conda install flask)
+# pip install pycraft-minetest
+
 #
 # TODO blocco over non funziona, provare con true invece di True
 # TODO blocco per leggere la chat e inserire le risposte in say
