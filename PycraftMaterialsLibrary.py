@@ -32,8 +32,6 @@ class PycraftMaterialsLibrary():
                 pass
         return None
 
-
-
     def buildDictWithBlockNamesValues(self):
         blockNames = dir(blocklist)  # get all variables in blocklist.py
         blockDict = {}
