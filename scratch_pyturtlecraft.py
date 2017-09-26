@@ -237,11 +237,12 @@ def initTurtle():
 def main():
     global app, myturtle, EXTENSION_PORT
     initLogger(app)
-    print(" * The Scratch helper app is running. Have fun :)")
-    print(" * ")
-    print(" *** creating turtle ***")
-    print(" * Press Control + C to quit.")
-    print(" * ")
+    print(" **************************************************")
+    print(" * The Scratch helper app is running. Have fun :) *")
+    print(" *                                                *")
+    print(" *** creating turtle ***                          *")
+    print(" * Press Control + C to quit.                     *")
+    print(" **************************************************")
 
     myturtle = initTurtle()
 
