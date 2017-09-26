@@ -32,6 +32,7 @@
 #
 # TODO [" ", "point in direction %n", "pointto", 90],
 # TODO [" ", "set pen to block type %m.blocktype", "penblock", "ice"],
+# TODO mettere i colori delsetblock come menu wool e poi un setblock libero con nome materiale
 #
 
 from flask import Flask, request
