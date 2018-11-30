@@ -29,11 +29,11 @@ from collections import MutableMapping, MutableSequence, Sequence
 import os, io
 
 try:
-    unicode
-    basestring
+    str
+    str
 except NameError:
-    unicode = str  # compatibility for Python 3
-    basestring = str  # compatibility for Python 3
+    str = str  # compatibility for Python 3
+    str = str  # compatibility for Python 3
 
 
 TAG_END = 0
@@ -76,7 +76,7 @@ class TAG(object):
                 ": " + self.valuestr()
     def valuestr(self):
         """Return Unicode string of unnested value. For iterators, this returns a summary."""
-        return unicode(self.value)
+        return str(self.value)
 
     def pretty_tree(self, indent=0):
         """Return formated Unicode string of self, where iterable items are recursively listed in detail."""
@@ -85,7 +85,7 @@ class TAG(object):
     # Python 2 compatibility; Python 3 uses __str__ instead.
     def __unicode__(self):
         """Return a unicode string with the result in human readable format. Unlike valuestr(), the result is recursive for iterators till at least one level deep."""
-        return unicode(self.value)
+        return str(self.value)
 
     def __str__(self):
         """Return a string (ascii formated for Python 2, unicode for Python 3) with the result in human readable format. Unlike valuestr(), the result is recursive for iterators till at least one level deep."""
@@ -208,7 +208,7 @@ class TAG_Byte_Array(TAG, MutableSequence):
         return "[%i byte(s)]" % len(self.value)
 
     def __unicode__(self):
-        return '['+",".join([unicode(x) for x in self.value])+']'
+        return '['+",".join([str(x) for x in self.value])+']'
     def __str__(self):
         return '['+",".join([str(x) for x in self.value])+']'
 
@@ -435,7 +435,7 @@ class TAG_Compound(TAG, MutableMapping):
     def __contains__(self, key):
         if isinstance(key, int):
             return key <= len(self.tags)
-        elif isinstance(key, basestring):
+        elif isinstance(key, str):
             for tag in self.tags:
                 if tag.name == key:
                     return True
@@ -447,7 +447,7 @@ class TAG_Compound(TAG, MutableMapping):
     def __getitem__(self, key):
         if isinstance(key, int):
             return self.tags[key]
-        elif isinstance(key, basestring):
+        elif isinstance(key, str):
             for tag in self.tags:
                 if tag.name == key:
                     return tag
@@ -461,7 +461,7 @@ class TAG_Compound(TAG, MutableMapping):
         if isinstance(key, int):
             # Just try it. The proper error will be raised if it doesn't work.
             self.tags[key] = value
-        elif isinstance(key, basestring):
+        elif isinstance(key, str):
             value.name = key
             for i, tag in enumerate(self.tags):
                 if tag.name == key:
@@ -472,7 +472,7 @@ class TAG_Compound(TAG, MutableMapping):
     def __delitem__(self, key):
         if isinstance(key, int):
             del(self.tags[key])
-        elif isinstance(key, basestring):
+        elif isinstance(key, str):
             self.tags.remove(self.__getitem__(key))
         else:
             raise ValueError("key needs to be either name of tag, or index of tag")
@@ -621,4 +621,4 @@ class NBTFile(TAG_Compound):
                     TAG_Compound.__name__, self.name, id(self))
 
 if __name__=="__main__":
-    print "NBT library"
+    print("NBT library")
