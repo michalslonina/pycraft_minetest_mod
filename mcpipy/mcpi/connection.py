@@ -7,7 +7,7 @@ import os
 import platform
 import base64
 from hashlib import md5
-from util import flatten_parameters_to_string
+from .util import flatten_parameters_to_string
 
 """ @author: Aron Nieminen, Mojang AB"""
 
