@@ -1,10 +1,14 @@
 #! /usr/bin/python
 
-# Scratch Hue Helper app
-# ----------------------
-# (c) 2015 Chris Proctor
-# Distributed under the MIT license.
-# Project homepage: http://mrproctor.net/scratch
+# Scratch Helper app
+# ------------------
+# template based on work of Chris Proctor, Project homepage: http://mrproctor.net/scratch
+#
+# main document
+#   https://wiki.scratch.mit.edu/w/images/ExtensionsDoc.HTTP-9-11.pdf
+# Scratch Extension Protocol Discussion
+#   https://scratch.mit.edu/discuss/topic/18117/
+#
 
 import json
 import requests
@@ -23,8 +27,6 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-
-
 app = Flask("Scratch_Pycraft")
 app.logger.removeHandler(app.logger.handlers[0])
 
@@ -38,7 +40,8 @@ for logger in loggers:
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)
 
-
+# jobs keeps the waiting jobs id. blocks type:'w'
+# TODO implement a system to return value to scratch (blocks type: 'r')
 jobs = set()
 
 @app.route('/poll')
@@ -75,10 +78,14 @@ def cube(block, side, x, y, z):
     return "OK"
     
 
+@app.route('/over/<string:block>')
+def over(block):
+    #print("check if player is over " + block)
+    return pcmt.over(pcmt.getblock(block))
 
 
 
-print(" * The Scratch helper app for controlling Hue lights is running. Have fun :)")
+print(" * The Scratch helper app is running. Have fun :)")
 print(" * See mrproctor.net/scratch for help.")
 print(" * Press Control + C to quit.")
 
