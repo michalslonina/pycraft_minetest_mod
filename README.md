@@ -7,7 +7,7 @@ Alessandro Norfo (ale.norfo@gmail.com) & Giuseppe Menegoz (gmenegoz@gmail.com)
 
 # Getting started
 ## WINDOWS
-Go to the release page and download the last version of the Pycraft Minetest installer: https://github.com/sprintingkiwi/pycraft_mod/releases.
+Go to the release page and download the last version of the Pycraft_Minetest.exe installer: https://github.com/sprintingkiwi/pycraft_mod/releases.
 
 ## LINUX
 * Install Minetest from your distribution's repository
