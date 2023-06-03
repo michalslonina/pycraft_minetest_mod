@@ -1,6 +1,7 @@
-default
-wool
-farming?
-doors?
-flowers?
-stained_glass?
+mcl_core
+mcl_wool
+mcl_torches
+mcl_tnt
+mcl_doors
+mcl_fire
+mcl_beds
